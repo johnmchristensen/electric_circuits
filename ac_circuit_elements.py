@@ -1,6 +1,17 @@
 import numpy as np
 import sympy as sp
 
+def to_capacitor_impedance(c, f):
+    return 1 / (c * f * 1j)
+
+def to_inductor_impedance(i, f):
+    return i * f * 1j
+
+def from_phasor(mag, angle_radians):
+    real = mag * np.cos(angle_radians)
+    img = mag * np.sin(angle_radians)
+    return real + 1j * img
+
 def to_phasor(rect):
     """
     Convert a number (complex, int, or float) to phasor (magnitude, angle in degrees).
@@ -24,3 +35,6 @@ def to_phasor(rect):
 
 def to_string(mag, angle_deg):
     return f"{mag} @ {angle_deg}"
+
+def to_phasor_string(rect):
+    return to_string(*to_phasor(rect))
