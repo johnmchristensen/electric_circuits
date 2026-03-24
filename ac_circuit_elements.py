@@ -20,9 +20,10 @@ def to_phasor(rect):
     Returns:
         tuple: (magnitude, angle in degrees)
     """
-    if isinstance(rect, sp.core.add.Add):
-      rect = complex(rect.evalf())
-    elif not isinstance(rect, complex):
+    if isinstance(rect, dict):
+        return {k: to_phasor(v) for k, v in rect.items()}
+
+    if not isinstance(rect, complex):
       rect = complex(rect)
 
     magnitude = abs(rect)
@@ -33,8 +34,17 @@ def to_phasor(rect):
         angle_deg = np.degrees(np.angle(rect))
     return magnitude, angle_deg
 
+def convert_sol_to_phasor_strings(sol):
+    return {k: to_string(*v) for k, v in sol.items()}
+
 def to_string(mag, angle_deg):
     return f"{mag} @ {angle_deg}"
 
 def to_phasor_string(rect):
     return to_string(*to_phasor(rect))
+
+def get_magnitude(rect):
+    return to_phasor(rect)[0]
+
+def get_angle_radians(rect):
+    return np.deg2rad(to_phasor(rect)[1])
