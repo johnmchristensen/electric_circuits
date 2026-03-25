@@ -1,6 +1,6 @@
 import numpy as np
 
-def calcParImp(*imps):
+def calc_par_imp(*imps):
     """
     Calculate the equivalent parallel impedance of two or more impedances.
 
