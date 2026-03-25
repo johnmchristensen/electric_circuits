@@ -6,3 +6,6 @@ def calc_average_power(voltage_rect, current_rect):
 
 def calc_max_average_power(voltage_thevenin, impedance_thevenin):
     return np.abs(get_magnitude(voltage_thevenin)) ** 2 / (8 * get_magnitude(impedance_thevenin))
+
+def calc_max_average_power_resistive(current_thevenin, load_resistance):
+    return 0.5 * get_magnitude(current_thevenin) ** 2 * load_resistance
