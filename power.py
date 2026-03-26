@@ -1,4 +1,4 @@
-from ac_circuit_elements import get_angle_radians, get_magnitude
+from ac_circuit_elements import get_angle_radians, get_magnitude, calc_sinusoidal_rms
 import numpy as np
 
 def calc_average_power(voltage_rect, current_rect):
@@ -15,3 +15,9 @@ def calc_power_from_current_rms(current_rms, resistance):
 
 def calc_power_from_voltage_rms(voltage_rms, resistance):
     return voltage_rms ** 2 / resistance
+
+def calc_apparent_power(voltage, current):
+    return calc_sinusoidal_rms(voltage) * calc_sinusoidal_rms(current)
+
+def calc_power_factor(voltage, current):
+    return np.cos(get_angle_radians(voltage) - get_angle_radians(current))

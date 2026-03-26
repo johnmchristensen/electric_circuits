@@ -48,3 +48,6 @@ def get_magnitude(rect):
 
 def get_angle_radians(rect):
     return np.deg2rad(to_phasor(rect)[1])
+
+def calc_sinusoidal_rms(rect):
+    return get_magnitude(rect) / np.sqrt(2)
