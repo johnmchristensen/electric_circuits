@@ -1,4 +1,4 @@
-from ac_circuit_elements import get_angle_radians, get_magnitude, calc_sinusoidal_rms
+from ac_circuit_elements import get_angle_radians, get_magnitude, calc_sinusoidal_rms, from_phasor
 import numpy as np
 
 def calc_average_power(voltage_rect, current_rect):
@@ -21,3 +21,19 @@ def calc_apparent_power(voltage, current):
 
 def calc_power_factor(voltage, current):
     return np.cos(get_angle_radians(voltage) - get_angle_radians(current))
+
+def calc_s_from_power_and_power_factor(power, power_factor, is_leading):
+    theta = np.arccos(power_factor)
+    if (is_leading):
+        theta = theta * -1
+
+    s_mag = power / power_factor
+
+    return from_phasor(s_mag, theta)
+
+def calc_power_factor_from_s(s):
+    angle = get_angle_radians(s)
+    return {
+        "pf": np.cos(angle),
+        "leading": angle < 0
+    }
