@@ -37,3 +37,9 @@ def calc_power_factor_from_s(s):
         "pf": np.cos(angle),
         "leading": angle < 0
     }
+
+def mag2rms(m):
+    return m / np.sqrt(2)
+
+def complex2rms(c):
+    return get_magnitude(c) / np.sqrt(2)
