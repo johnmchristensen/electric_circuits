@@ -1,5 +1,6 @@
 from ac_circuit_elements import get_angle_radians, get_magnitude, calc_sinusoidal_rms, from_phasor
 import numpy as np
+import sympy as sp
 
 def calc_average_power(voltage_rect, current_rect):
     return 0.5 * get_magnitude(voltage_rect) * get_magnitude(current_rect) * np.cos(get_angle_radians(voltage_rect) - get_angle_radians(current_rect))
@@ -43,3 +44,7 @@ def mag2rms(m):
 
 def complex2rms(c):
     return get_magnitude(c) / np.sqrt(2)
+
+def piecewise_rms(functions, ranges, period, t):
+    integral_sum = np.sum([sp.integrate(f**2, (t, a, b)) for (f, (a, b)) in zip(functions, ranges)])
+    return sp.sqrt((1 / period) * integral_sum)
