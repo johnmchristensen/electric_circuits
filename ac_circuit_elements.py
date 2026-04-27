@@ -1,5 +1,4 @@
 import numpy as np
-import sympy as sp
 
 def to_capacitor_impedance(w, c):
     return 1 / (w * c * 1j)
@@ -51,3 +50,6 @@ def get_angle_radians(rect):
 
 def calc_sinusoidal_rms(rect):
     return get_magnitude(rect) / np.sqrt(2)
+
+def to_angular_frequency(frequency):
+    return 2 * np.pi * frequency

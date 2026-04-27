@@ -21,7 +21,8 @@ def calc_apparent_power(voltage, current):
     return calc_sinusoidal_rms(voltage) * calc_sinusoidal_rms(current)
 
 def calc_power_factor(voltage, current):
-    return np.cos(get_angle_radians(voltage) - get_angle_radians(current))
+    angle = get_angle_radians(voltage) - get_angle_radians(current)
+    return np.cos(angle), angle < 0
 
 def calc_s_from_power_and_power_factor(power, power_factor, is_leading):
     theta = np.arccos(power_factor)
@@ -34,13 +35,17 @@ def calc_s_from_power_and_power_factor(power, power_factor, is_leading):
 
 def calc_power_factor_from_s(s):
     angle = get_angle_radians(s)
-    return {
-        "pf": np.cos(angle),
-        "leading": angle < 0
-    }
+    return np.cos(angle), angle < 0
+
+def imp2pf(z):
+    angle = get_angle_radians(z)
+    return np.cos(angle), angle < 0
 
 def mag2rms(m):
     return m / np.sqrt(2)
+
+def rms2mag(rms):
+    return rms * np.sqrt(2)
 
 def complex2rms(c):
     return get_magnitude(c) / np.sqrt(2)
@@ -48,3 +53,9 @@ def complex2rms(c):
 def piecewise_rms(functions, ranges, period, t):
     integral_sum = np.sum([sp.integrate(f**2, (t, a, b)) for (f, (a, b)) in zip(functions, ranges)])
     return sp.sqrt((1 / period) * integral_sum)
+
+def calc_reactive_power(voltage_rect, current_rect):
+    return 0.5 * get_magnitude(voltage_rect) * get_magnitude(current_rect) * np.sin(get_angle_radians(voltage_rect) - get_angle_radians(current_rect))
+
+def calc_unity_capacitance(voltage_rms, w, q):
+    return  q / (w * voltage_rms**2)
