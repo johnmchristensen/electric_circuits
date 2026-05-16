@@ -10,6 +10,9 @@ def from_phasor(mag, angle_radians):
     real = mag * np.cos(angle_radians)
     img = mag * np.sin(angle_radians)
     return real + 1j * img
+    
+def from_phasor_deg(mag, angle_degrees):
+    return from_phasor(mag, np.deg2rad(angle_degrees))
 
 def to_phasor(rect):
     """
